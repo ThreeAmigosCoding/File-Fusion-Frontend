@@ -1,14 +1,26 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit{
 
-    constructor(private router: Router) {
+    user: string = "";
+
+    constructor(private router: Router, private authService: AuthService) {
+    }
+
+    ngOnInit(): void {
+        this.authService.userLoggedState$.subscribe({
+           next: value => {
+               this.user = value;
+           }
+        });
+
     }
 
     home() {
@@ -24,6 +36,10 @@ export class NavBarComponent {
     }
 
     signOut() {
-        alert("Namestiti logout")
+        this.authService.logOut();
+    }
+
+    login() {
+        this.authService.goToCognitoLogin();
     }
 }

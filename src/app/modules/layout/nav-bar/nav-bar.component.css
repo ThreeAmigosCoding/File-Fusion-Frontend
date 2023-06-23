@@ -13,7 +13,7 @@ h2 {
     font-weight: 500;
 }
 
-#buttons-container {
+#buttons-container, #login-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
