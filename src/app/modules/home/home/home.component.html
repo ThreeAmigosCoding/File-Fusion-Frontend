@@ -1,9 +1,23 @@
 <div id="main-container">
     <div id="home-content" *ngIf="user !== ''">
-        <h1>
-            <mat-icon class="icon-display">home</mat-icon>
-            Home
-        </h1>
+        <div id="top-container">
+            <h1>
+                <mat-icon class="icon-display">home</mat-icon>
+                Home
+            </h1>
+            <input id="file-input" type="file" class="hidden" multiple (change)="upload($event)">
+            <label for="file-input" id="upload-file">
+                <mat-icon>add</mat-icon>
+                Upload file
+            </label>
+        </div>
+        <div id="files-container">
+            <div class="file" *ngFor="let file of allFiles" (click)="openFileOverview(file)">
+                <h3>{{ file.name }}</h3>
+                <p>{{ file.type }}</p>
+                <img src="assets/images/Logo.png" alt="Image Placeholder">
+            </div>
+        </div>
     </div>
 
     <img *ngIf="user === ''" src="assets/images/Logo.png" id="background-image">
