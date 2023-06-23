@@ -1,0 +1,10 @@
+h1 {
+    margin: 20px;
+    color: #0B2433;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.icon-display {
+    transform: scale(1.4);
+}
