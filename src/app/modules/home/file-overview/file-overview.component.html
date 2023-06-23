@@ -1,0 +1,30 @@
+<div class="file-overview-container">
+    <div class="file-view">
+        <img src="assets/images/Logo.png" alt="Image Placeholder">
+    </div>
+    <div class="metadata">
+        <h1>{{file.name}}</h1>
+        <p>Size: {{file.size_in_kb}}kB</p>
+        <h2>Description:</h2>
+        <p>{{file.description}}</p>
+        <p>Type: {{file.type}}</p>
+        <p>Created at: {{file.created_at | date:'dd.MM.yyyy. HH:mm'}}</p>
+        <p>Last changed: {{file.last_changed | date:'dd.MM.yyyy. HH:mm'}}</p>
+
+        <div class="update-delete-buttons">
+            <button
+                id="update-file-button"
+                mat-button
+                (click)="update()">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button
+                id="delete-file-button"
+                mat-button
+                (click)="delete()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
