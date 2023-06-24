@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import {MultimediaMetadata} from "../../../model/multimedia";
 import {MatDialog} from "@angular/material/dialog";
 import {FileOverviewComponent} from "../file-overview/file-overview.component";
+import {MyFileService} from "../my-file.service";
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ export class HomeComponent implements OnInit{
     user: string = "";
     allFiles: MultimediaMetadata[] = [];
 
-    constructor(private authService: AuthService, public fileOverviewDialog: MatDialog) {
+    constructor(private authService: AuthService, public fileOverviewDialog: MatDialog,
+                private myFileService: MyFileService) {
     }
 
     ngOnInit() {

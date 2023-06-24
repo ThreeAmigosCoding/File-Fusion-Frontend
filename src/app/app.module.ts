@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import {LayoutModule} from "./modules/layout/layout.module";
 import {HomeModule} from "./modules/home/home.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {TokenInterceptor} from "./modules/auth/tokeninterceptor";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         HomeModule,
         BrowserAnimationsModule
     ],
-  providers: [],
+  providers: [
+      {
+          provide: HTTP_INTERCEPTORS,
+          useClass: TokenInterceptor,
+          multi: true,
+      }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

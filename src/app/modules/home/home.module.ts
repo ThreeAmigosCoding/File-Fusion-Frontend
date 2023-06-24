@@ -7,6 +7,7 @@ import { MatIconModule} from "@angular/material/icon";
 import { FileOverviewComponent } from './file-overview/file-overview.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {MatButtonModule} from "@angular/material/button";
         CommonModule,
         MatIconModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        HttpClientModule
     ]
 })
 export class HomeModule { }
