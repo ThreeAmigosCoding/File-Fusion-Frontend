@@ -12,4 +12,9 @@ export class MyFileService {
   helloWorld(user: string): Observable<any>{
     return this.http.get<any>("https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com/dev/helloWorld");
   }
+
+  uploadFile(fileInfo: any, email: string) : Observable<any> {
+      return this.http.post(" https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com/dev/uploadFile/" + email,
+           fileInfo);
+  }
 }

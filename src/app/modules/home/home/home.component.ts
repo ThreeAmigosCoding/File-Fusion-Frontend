@@ -38,7 +38,9 @@ export class HomeComponent implements OnInit{
                 created_at: new Date(),
                 last_changed: new Date(),
                 username: `User ${i}`,
-                description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`
+                description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.`
             };
 
             this.allFiles.push(multimedia);
@@ -55,13 +57,27 @@ export class HomeComponent implements OnInit{
         if (files.length === 0) {
             return;
         }
-        if (files.length > 10) {
-            alert("You can upload a maximum of 10 files at once.")
+        if (files.length > 1) {
+            alert("You can upload a maximum of 1 file at once.")
             return;
         }
-        for (let file of files) {
-            alert("Handle file upload")
-        }
+        const fileToUpload = files.item(0);
+        const reader = new FileReader();
 
+        reader.onload = (evt: any) => {
+            const base64String = evt.target.result.split(',')[1];
+            const fileInfo = {
+                file: base64String,
+                name: fileToUpload.name,
+                size: fileToUpload.size / 1024,  // size in KB
+                extension: fileToUpload.name.split('.').pop()  // get file extension
+            };
+            this.myFileService.uploadFile(fileInfo, this.authService.getUserMail()).subscribe({
+                next: value => alert(value.message),
+                error: err => alert(err.message)
+            });
+        };
+
+        reader.readAsDataURL(fileToUpload);
     }
 }
