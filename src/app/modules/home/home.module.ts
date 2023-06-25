@@ -8,10 +8,13 @@ import { FileOverviewComponent } from './file-overview/file-overview.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
+
 import { AlbumCreationComponent } from './album-creation/album-creation.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
+
 import {MatInputModule} from "@angular/material/input";
+import {SafePipe} from "./file-overview/safe-pipe";
 
 
 @NgModule({
@@ -20,7 +23,8 @@ import {MatInputModule} from "@angular/material/input";
     AlbumsComponent,
     SharedWithMeComponent,
     FileOverviewComponent,
-    AlbumCreationComponent
+    AlbumCreationComponent,
+    SafePipe
   ],
     imports: [
         CommonModule,
@@ -31,6 +35,9 @@ import {MatInputModule} from "@angular/material/input";
         MatFormFieldModule,
         ReactiveFormsModule,
         MatInputModule
-    ]
+    ],
+
+    providers: [SafePipe]
+
 })
 export class HomeModule { }

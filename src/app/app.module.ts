@@ -10,9 +10,9 @@ import {TokenInterceptor} from "./modules/auth/tokeninterceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+    declarations: [
+        AppComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -20,13 +20,15 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
         HomeModule,
         BrowserAnimationsModule
     ],
-  providers: [
-      {
-          provide: HTTP_INTERCEPTORS,
-          useClass: TokenInterceptor,
-          multi: true,
-      }
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true,
+        }
+    ],
+    exports: [
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
