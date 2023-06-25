@@ -7,4 +7,5 @@ export interface MultimediaMetadata {
     last_changed: Date;
     username: string;
     description: string;
+    data_url: string;
 }
