@@ -1,6 +1,22 @@
 <div id="main-container">
-    <h1>
-        <mat-icon class="icon-display">folder</mat-icon>
-        Albums
-    </h1>
+
+    <div id="top-container">
+        <h1>
+            <mat-icon class="icon-display">folder</mat-icon>
+            Albums
+        </h1>
+        <button mat-button id="new-album"
+        (click)="newAlbum()">
+            <mat-icon>add</mat-icon>
+            New album
+        </button>
+    </div>
+
+    <div id="album-container">
+        <div class="album">
+            <mat-icon>folder</mat-icon>
+            <h3> Album name </h3>
+        </div>
+    </div>
+
 </div>

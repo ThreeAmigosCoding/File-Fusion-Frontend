@@ -1,0 +1,17 @@
+<div mat-dialog-content id="album-create">
+    <form [formGroup]="albumForm"
+          (ngSubmit)="createAlbum()">
+
+        <h2>Create album</h2>
+
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Album name</mat-label>
+            <input matInput type="text" name="albumName" formControlName="albumName"/>
+            <mat-error *ngIf="albumForm?.get('albumName')?.invalid">Album name invalid.</mat-error>
+        </mat-form-field>
+
+        <div class="actions-div">
+            <button mat-button type="submit">Create</button>
+        </div>
+    </form>
+</div>
