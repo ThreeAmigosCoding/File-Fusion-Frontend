@@ -1,21 +1,38 @@
 <div class="file-overview-container">
     <div class="file-view">
-        <img src="assets/images/Logo.png" alt="Image Placeholder">
+        <img *ngIf="getFileTypeString(file) === 'image'" src="{{file.data_url}}" alt="Image Placeholder">
+        <audio controls *ngIf="getFileTypeString(file) === 'audio'">
+            <source [src]="file.data_url" type="audio/{{file.type}}" />
+            Your browser does not support the audio element.
+        </audio>
+        <video controls *ngIf="getFileTypeString(file) === 'video'" width="100%" height="100%">
+            <source [src]="file.data_url" type="video/{{file.type}}" />
+            Your browser does not support the video element.
+        </video>
+        <h1 *ngIf="getFileTypeString(file) === 'unknown'">Preview not available.</h1>
     </div>
-    <div class="metadata">
-        <h1>{{file.name}}</h1>
-        <p>Size: {{file.size_in_kb}}kB</p>
-        <h2>Description:</h2>
-        <p>{{file.description}}</p>
+    <div *ngIf="!editMode" class="metadata">
+        <h1>{{getFileName(file)}}</h1>
+        <h2 *ngIf="file.description.length != 0">Description:</h2>
+        <p *ngIf="file.description.length != 0">{{file.description}}</p>
+        <p>Size: {{(file.size_in_kb).toFixed(2)}} kB</p>
         <p>Type: {{file.type}}</p>
         <p>Created at: {{file.created_at | date:'dd.MM.yyyy. HH:mm'}}</p>
         <p>Last changed: {{file.last_changed | date:'dd.MM.yyyy. HH:mm'}}</p>
+        <a
+            id="download-button"
+            mat-button
+            [href]="file.data_url"
+            [download]="getFileName(file)">
+            <mat-icon>download</mat-icon>
+            Download
+        </a>
 
         <div class="update-delete-buttons">
             <button
                 id="update-file-button"
                 mat-button
-                (click)="update()">
+                (click)="switchUpdateMode()">
                 <mat-icon>edit</mat-icon>
             </button>
 
@@ -27,4 +44,42 @@
             </button>
         </div>
     </div>
+    <form
+        [formGroup]="updateFileForm"
+        (ngSubmit)="save()"
+        *ngIf="editMode"
+        class="metadata">
+
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Name</mat-label>
+            <input matInput type="text" name="name" formControlName="name">
+            <mat-error *ngIf="updateFileForm?.get('name')?.invalid">Name is required.</mat-error>
+        </mat-form-field>
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Description</mat-label>
+            <input matInput type="text" name="description" formControlName="description"/>
+<!--            <mat-error *ngIf="albumForm?.get('albumName')?.invalid">Album name invalid.</mat-error>-->
+        </mat-form-field>
+        <input id="file-change-input" type="file" class="hidden" (change)="uploadChange($event)">
+        <label for="file-change-input" id="upload-file-change">
+            Change file
+        </label>
+        <p>{{changedFileName}}</p>
+
+        <div class="choice-buttons">
+            <button
+                id="save-changes-button"
+                mat-button
+                (click)="save()">
+                Save
+            </button>
+
+            <button
+                id="cancel-edit-button"
+                mat-button
+                (click)="switchUpdateMode()">
+                Cancel
+            </button>
+        </div>
+    </form>
 </div>

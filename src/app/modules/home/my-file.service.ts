@@ -23,4 +23,13 @@ export class MyFileService {
       return this.http.get<MultimediaMetadata[]>("https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com" +
           "/dev/getAllUserFiles/" + email);
   }
+
+  updateFile(id: string, changedFile: any): Observable<any>{
+      return  this.http.put<any>(" https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com/dev/updateFile/" + id, changedFile)
+  }
+
+  deleteFile(file: MultimediaMetadata): Observable<any> {
+      return this.http.delete<any>("https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com" +
+          "/dev/delete_file/" + file.id);
+  }
 }
