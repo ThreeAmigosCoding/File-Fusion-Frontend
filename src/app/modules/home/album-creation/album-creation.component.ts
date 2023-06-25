@@ -42,6 +42,9 @@ export class AlbumCreationComponent implements OnInit{
         this.albumService.createAlbum(album, this.authService.getUserMail()).subscribe({
             next: value => {
                 alert(value.message);
+                this.albumService.getAllUserAlbums(this.authService.getUserMail()).subscribe({
+                    next: value => this.albumService.setAlbumsState(value)
+                })
                 this.dialogRef.close();
             }, error: err => alert(err.error.message)
         })

@@ -13,9 +13,9 @@
     </div>
 
     <div id="album-container">
-        <div class="album">
+        <div class="album" *ngFor="let album of albums">
             <mat-icon>folder</mat-icon>
-            <h3> Album name </h3>
+            <h3> {{ album.name }} </h3>
         </div>
     </div>
 
