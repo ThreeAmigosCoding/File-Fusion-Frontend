@@ -45,6 +45,7 @@ h1 {
 
 #home-content {
     height: 100%;
+    width: calc(100vw - 300px);
     overflow-y: auto;
 }
 
@@ -73,6 +74,7 @@ h1 {
     gap: 10px;
     background-color: #F9F5FF;
     border-radius: 10px;
+    max-width: 200px;
 }
 
 .file:hover{
@@ -81,11 +83,16 @@ h1 {
 }
 
 .file h3, .file p {
-    margin: 0
+    margin: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .file img {
     width: 200px;
+    height: 200px;
+    object-fit: contain;
 }
 
 #background-image{

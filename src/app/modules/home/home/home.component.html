@@ -13,9 +13,9 @@
         </div>
         <div id="files-container">
             <div class="file" *ngFor="let file of allFiles" (click)="openFileOverview(file)">
-                <h3>{{ file.name }}</h3>
+                <h3>{{ getFileName(file) }}</h3>
                 <p>{{ file.type }}</p>
-                <img [src]="file.data_url" alt="Image Placeholder">
+                <img [src]=getFilePreviewImageSource(file) alt="Image Placeholder">
             </div>
         </div>
     </div>

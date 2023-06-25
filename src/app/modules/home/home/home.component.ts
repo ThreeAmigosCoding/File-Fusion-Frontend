@@ -5,6 +5,7 @@ import {MultimediaMetadata} from "../../../model/multimedia";
 import {MatDialog} from "@angular/material/dialog";
 import {FileOverviewComponent} from "../file-overview/file-overview.component";
 import {MyFileService} from "../my-file.service";
+import {getFileName, getFilePreviewImageSource} from "../../../file-helper";
 
 @Component({
   selector: 'app-home',
@@ -68,6 +69,10 @@ export class HomeComponent implements OnInit{
             return;
         }
         const fileToUpload = files.item(0);
+        if (fileToUpload.size / 1024 > 1536) {
+            alert("Maximum upload file size is 1.5MB.")
+            return;
+        }
         const reader = new FileReader();
 
         reader.onload = (evt: any) => {
@@ -91,4 +96,7 @@ export class HomeComponent implements OnInit{
 
         reader.readAsDataURL(fileToUpload);
     }
+
+    protected readonly getFileName = getFileName;
+    protected readonly getFilePreviewImageSource = getFilePreviewImageSource;
 }
