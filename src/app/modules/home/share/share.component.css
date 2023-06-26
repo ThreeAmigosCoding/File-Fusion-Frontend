@@ -1,0 +1,81 @@
+.share-container {
+    width: 50vw;
+    background-color: #0B2433;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+}
+
+h1 {
+    margin: 0;
+    color: #E1F3FA;
+}
+
+.field {
+    width: 80%;
+    border-radius: 30px;
+}
+
+.add-email-button, .invite-button {
+    background-color: #34D8F5;
+    font-size: 24px;
+    text-align: center;
+    height: 56px;
+    padding: 20px;
+    width: 20%;
+    border-radius: 30px;
+}
+
+.add-email-button mat-icon {
+    transform: scale(1.8);
+}
+
+.invite-button {
+    margin-left: auto;
+}
+
+.mail-container {
+    display: flex;
+    gap: 20px;
+}
+
+.added-mails, .members {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.added-mail, .member {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    background-color: #E1F3FA;
+    color: #0B2433;
+    padding: 0 10px;
+    align-items: center;
+    border-radius: 30px;
+}
+
+.added-mail h3, .member h3 {
+    font-size: 16px;
+}
+
+.remove-email-button, .remove-member-button {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #0B2433;
+    border: none;
+}
+
+.remove-email-button:hover, .remove-member-button:hover {
+    cursor: pointer;
+}
+
+.remove-email-button mat-icon, .remove-member-button mat-icon {
+    color: #E1F3FA;
+    transform: scale(0.8);
+    margin-left: -6px;
+}

@@ -1,0 +1,53 @@
+<form
+    [formGroup]="inviteForm"
+    (ngSubmit)="share()"
+    class="share-container">
+    <h1 *ngIf="members.length != 0">Shared with</h1>
+    <div class="members">
+        <div class="member" *ngFor="let member of members; let i = index">
+            <h3>{{member}}</h3>
+            <button
+                class="remove-member-button"
+                type="button"
+                (click)="removeMember(i)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <h1>Share with</h1>
+    <div class="mail-container">
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Email</mat-label>
+            <input matInput type="text" name="email" formControlName="email">
+            <mat-error *ngIf="inviteForm?.get('email')?.invalid">Email is invalid.</mat-error>
+        </mat-form-field>
+        <button
+            class="add-email-button"
+            mat-button
+            type="button"
+            [disabled]="inviteForm.get('email')?.invalid"
+            (click)="inviteForm.value.email && addEmail(inviteForm.value.email)">
+            <mat-icon>add</mat-icon>
+            Add
+        </button>
+    </div>
+    <div class="added-mails">
+        <div class="added-mail" *ngFor="let mail of emailList; let i = index">
+            <h3>{{mail}}</h3>
+            <button
+                class="remove-email-button"
+                (click)="removeEmail(i)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <button *ngIf="emailList.length != 0"
+        class="invite-button"
+        mat-button
+        type="submit"
+        (click)="share()">
+        <mat-icon>share</mat-icon>
+        Share
+    </button>
+
+</form>

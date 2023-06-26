@@ -19,14 +19,21 @@
         <p>Type: {{file.type}}</p>
         <p>Created at: {{file.created_at | date:'dd.MM.yyyy. HH:mm'}}</p>
         <p>Last changed: {{file.last_changed | date:'dd.MM.yyyy. HH:mm'}}</p>
-        <a
-            id="download-button"
-            mat-button
-            [href]="file.data_url"
-            [download]="getFileName(file)">
-            <mat-icon>download</mat-icon>
-            Download
-        </a>
+        <div class="download-share-container">
+            <a
+                id="download-button"
+                mat-button
+                [href]="file.data_url"
+                [download]="getFileName(file)">
+                <mat-icon>download</mat-icon>
+                Download
+            </a>
+            <button mat-button class="share-file" (click)="openShareComponent()">
+                <mat-icon>share</mat-icon>
+                Share
+            </button>
+        </div>
+
         <h2>Add to album</h2>
         <div class="add-to-albums-container">
             <button class="available-album" *ngFor="let availableAlbum of availableAlbums; let i = index;" (click)="addToAlbum(i)">
@@ -34,6 +41,7 @@
                 <h3> {{ availableAlbum.name }} </h3>
             </button>
         </div>
+
 
         <div class="update-delete-buttons">
             <button

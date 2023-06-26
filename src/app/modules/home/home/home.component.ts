@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../auth/auth.service";
-import { Location } from '@angular/common';
 import {MultimediaMetadata} from "../../../model/multimedia";
 import {MatDialog} from "@angular/material/dialog";
 import {FileOverviewComponent} from "../file-overview/file-overview.component";

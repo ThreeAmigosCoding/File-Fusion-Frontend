@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MultimediaMetadata} from "../../../model/multimedia";
 import {getFileName, getFileTypeString} from "../../../file-helper";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MyFileService} from "../my-file.service";
 import {AuthService} from "../../auth/auth.service";
 import {Album} from "../../../model/album";
+import {ShareComponent} from "../share/share.component";
 
 
 
@@ -27,7 +28,8 @@ export class FileOverviewComponent implements OnInit{
 
     constructor(private dialogRef: MatDialogRef<FileOverviewComponent>,
                 @Inject(MAT_DIALOG_DATA) public file: MultimediaMetadata,
-                private myFileService: MyFileService, private authService: AuthService) {
+                private myFileService: MyFileService, private authService: AuthService,
+                public shareDialog: MatDialog) {
     }
 
     updateFileForm = new FormGroup({
@@ -128,5 +130,13 @@ export class FileOverviewComponent implements OnInit{
             error: err => alert(err.error.message)
         });
 
+    }
+
+    openShareComponent() {
+        let content = {
+            id: this.file.id,
+            type: 'file'
+        }
+        this.shareDialog.open(ShareComponent, {data: content})
     }
 }

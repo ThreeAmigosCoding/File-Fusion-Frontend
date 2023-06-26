@@ -16,6 +16,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {SafePipe} from "./file-overview/safe-pipe";
 import { AlbumContentComponent } from './album-content/album-content.component';
+import { ShareComponent } from './share/share.component';
+import { MemberInviteComponent } from './member-invite/member-invite.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { AlbumContentComponent } from './album-content/album-content.component';
     FileOverviewComponent,
     AlbumCreationComponent,
     SafePipe,
-    AlbumContentComponent
+    AlbumContentComponent,
+    ShareComponent,
+    MemberInviteComponent
   ],
     imports: [
         CommonModule,
