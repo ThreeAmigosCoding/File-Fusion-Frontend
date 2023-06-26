@@ -1,7 +1,7 @@
 import {MultimediaMetadata} from "./model/multimedia";
 
 export function getFileName(file: MultimediaMetadata): string {
-    return file.name.split('.')[0];
+    return file.name.split(';')[1].split('.')[0];
 }
 
 export function getFilePreviewImageSource(file: MultimediaMetadata): string {
