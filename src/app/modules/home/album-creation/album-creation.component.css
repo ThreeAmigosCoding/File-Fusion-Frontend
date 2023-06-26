@@ -1,0 +1,18 @@
+#album-create {
+    color: #0B2433;
+    background-color: #F9F5FF;
+    font-family: 'Poppins', sans-serif;
+}
+
+button{
+    background-color: #34D8F5;
+    width: 100px;
+    text-align: center;
+    border-radius: 20px;
+    color: #0B2433;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    padding: 2%;
+    margin-top: 10px;
+}

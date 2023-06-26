@@ -1,5 +1,5 @@
 <div id="nav-bar">
-    <div id="buttons-container">
+    <div id="buttons-container" *ngIf = "user !== ''">
         <h2> File Fusion</h2>
         <button
             class="nav-button"
@@ -29,6 +29,17 @@
             (click)="signOut()">
             <mat-icon>logout</mat-icon>
             Sign Out
+        </button>
+    </div>
+
+    <div id="login-container" *ngIf="user === ''">
+        <h2> File Fusion</h2>
+        <button
+            class="nav-button"
+            mat-button
+            (click)="login()">
+            <mat-icon>login</mat-icon>
+            Login
         </button>
     </div>
 </div>
