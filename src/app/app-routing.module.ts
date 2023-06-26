@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./modules/home/home/home.component";
 import {AlbumsComponent} from "./modules/home/albums/albums.component";
 import {SharedWithMeComponent} from "./modules/home/shared-with-me/shared-with-me.component";
+import {AlbumContentComponent} from "./modules/home/album-content/album-content.component";
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'albums', component: AlbumsComponent},
-    {path: 'shared-with-me', component: SharedWithMeComponent}
+    {path: 'shared-with-me', component: SharedWithMeComponent},
+    {path: 'album-content', component: AlbumContentComponent}
 ];
 
 @NgModule({

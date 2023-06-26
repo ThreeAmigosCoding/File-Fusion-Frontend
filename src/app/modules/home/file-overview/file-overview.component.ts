@@ -5,7 +5,6 @@ import {getFileName, getFileTypeString} from "../../../file-helper";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MyFileService} from "../my-file.service";
 import {AuthService} from "../../auth/auth.service";
-import * as moment from 'moment';
 
 
 

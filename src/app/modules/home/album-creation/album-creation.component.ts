@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {AuthService} from "../../auth/auth.service";
 import {AlbumService} from "../album.service";
-import {Album} from "../../../model/album";
 
 @Component({
   selector: 'app-album-creation',
@@ -23,7 +22,8 @@ export class AlbumCreationComponent implements OnInit{
 
     constructor(public dialogRef: MatDialogRef<AlbumCreationComponent>,
                 private authService: AuthService,
-                private albumService: AlbumService) {
+                private albumService: AlbumService,
+                @Inject(MAT_DIALOG_DATA) public parent: string) {
     }
 
     ngOnInit(): void {
@@ -32,11 +32,12 @@ export class AlbumCreationComponent implements OnInit{
     createAlbum() {
         if (!this.albumForm.valid) return;
 
-        let album: Album = {
+        let album: {id: string; owner: string; parent: string; deleted: boolean; name: string } = {
+            id: "",
             name: String(this.albumForm.value.albumName),
             owner: this.authService.getUserMail(),
             deleted: false,
-            parent: ""
+            parent: this.parent
         }
 
         this.albumService.createAlbum(album, this.authService.getUserMail()).subscribe({

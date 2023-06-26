@@ -4,6 +4,8 @@ import {AlbumCreationComponent} from "../album-creation/album-creation.component
 import {AuthService} from "../../auth/auth.service";
 import {AlbumService} from "../album.service";
 import {Album} from "../../../model/album";
+import {Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-albums',
@@ -16,7 +18,8 @@ export class AlbumsComponent implements OnInit{
 
     constructor(public dialog: MatDialog,
                 private authService: AuthService,
-                private albumService: AlbumService) {
+                private albumService: AlbumService,
+                private router: Router) {
     }
 
     ngOnInit(): void {
@@ -34,6 +37,12 @@ export class AlbumsComponent implements OnInit{
     }
 
     newAlbum() {
-        this.dialog.open(AlbumCreationComponent);
+        this.dialog.open(AlbumCreationComponent, {data: ""});
+    }
+
+    openAlbum(index: number) {
+        let album = this.albums[index];
+        this.router.navigate(['album-content']);
+        this.albumService.setSelectedAlbumState(album);
     }
 }
