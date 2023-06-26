@@ -8,4 +8,5 @@ export interface MultimediaMetadata {
     username: string;
     description: string;
     data_url: string;
+    albumId: string;
 }

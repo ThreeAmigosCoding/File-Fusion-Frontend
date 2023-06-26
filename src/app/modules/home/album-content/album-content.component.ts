@@ -50,6 +50,16 @@ export class AlbumContentComponent implements OnInit{
                 console.log(value)
             }
         });
+
+        this.albumService.setMultimediaState([]);
+
+        this.albumService.multimediaState.subscribe({
+            next: value => this.allFiles = value
+        });
+
+        this.albumService.getAlbumContent(this.authService.getUserMail(), this.selectedAlbum.id).subscribe({
+            next: value => this.albumService.setMultimediaState(value)
+        });
     }
 
     newAlbum() {
@@ -74,12 +84,57 @@ export class AlbumContentComponent implements OnInit{
         })
     }
 
-    upload($event: Event) {
+    upload($event: any) {
+        let files = $event.target.files;
+        if (files.length === 0) {
+            return;
+        }
+        if (files.length > 1) {
+            alert("You can upload a maximum of 1 file at once.")
+            return;
+        }
+        const fileToUpload = files.item(0);
+        if (fileToUpload.size / 1024 > 1536) {
+            alert("Maximum upload file size is 1.5MB.")
+            return;
+        }
+        const reader = new FileReader();
 
+        reader.onload = (evt: any) => {
+            const base64String = evt.target.result.split(',')[1];
+            const fileInfo = {
+                file: base64String,
+                name: fileToUpload.name,
+                size: fileToUpload.size / 1024,  // size in KB
+                extension: fileToUpload.name.split('.').pop(),  // get file extension
+                albumId: this.selectedAlbum.id
+            };
+            this.myFileService.uploadFile(fileInfo, this.authService.getUserMail()).subscribe({
+                next: value => {
+                    alert(value.message)
+                    this.albumService.getAlbumContent(this.authService.getUserMail(), this.selectedAlbum.id)
+                        .subscribe({
+                            next: allFiles => this.allFiles = allFiles
+                    });
+                },
+                error: err => alert(err.message)
+            });
+        };
+
+        reader.readAsDataURL(fileToUpload);
     }
 
     openAlbum(i: number) {
         let album = this.subAlbums[i];
+        this.albumService.getSubAlbums(album.id).subscribe({
+            next: value => {
+                this.albumService.setAlbumsState(value);
+            }
+        });
+        this.albumService.getAlbumContent(this.authService.getUserMail(), album.id).subscribe({
+            next: value => this.albumService.setMultimediaState(value)
+        });
+
         this.albumService.setSelectedAlbumState(album);
         this.router.navigate(['album-content']);
     }
