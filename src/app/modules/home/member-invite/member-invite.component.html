@@ -1,0 +1,32 @@
+<form
+    [formGroup]="inviteMemberForm"
+    class="invite-member-container">
+    <h1 *ngIf="membersList.length != 0">Members</h1>
+    <div class="current-members">
+        <div class="member" *ngFor="let member of membersList; let i = index">
+            <h3>{{member}}</h3>
+            <button
+                class="remove-member-button"
+                (click)="removeMember(i)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <h1>Invite member</h1>
+    <div class="mail-container">
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Email</mat-label>
+            <input matInput type="text" name="email" formControlName="email">
+            <mat-error *ngIf="inviteMemberForm?.get('email')?.invalid">Email is invalid.</mat-error>
+        </mat-form-field>
+        <button
+            class="add-email-button"
+            mat-button
+            [disabled]="inviteMemberForm.get('email')?.invalid"
+            (click)="inviteMemberForm.value.email && invite(inviteMemberForm.value.email)">
+            <mat-icon>call_made</mat-icon>
+            Invite
+        </button>
+    </div>
+</form>
+
