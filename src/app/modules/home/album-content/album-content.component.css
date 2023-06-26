@@ -20,6 +20,10 @@ h1 {
     font-weight: 500;
 }
 
+#main-container h2 {
+    margin-left: 20px;
+}
+
 #upload-file, #new-album, #delete-album {
     font-size: 24px;
     background-color: #34D8F5;

@@ -35,16 +35,20 @@ export class AlbumContentComponent implements OnInit{
     }
 
     ngOnInit(): void {
+        this.albumService.setAlbumsState([]);
         this.albumService.selectedAlbumState.subscribe({
             next: value => this.selectedAlbum = value
         });
 
         this.albumService.albumsState.subscribe({
-            next: value => this.subAlbums
+            next: value => this.subAlbums = value
         });
 
         this.albumService.getSubAlbums(this.selectedAlbum.id).subscribe({
-            next: value => this.albumService.setAlbumsState(value)
+            next: value => {
+                this.albumService.setAlbumsState(value);
+                console.log(value)
+            }
         });
     }
 
@@ -72,5 +76,11 @@ export class AlbumContentComponent implements OnInit{
 
     upload($event: Event) {
 
+    }
+
+    openAlbum(i: number) {
+        let album = this.subAlbums[i];
+        this.albumService.setSelectedAlbumState(album);
+        this.router.navigate(['album-content']);
     }
 }

@@ -23,17 +23,18 @@ export class AlbumsComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        this.albumService.albumsState.subscribe({
-            next: value => this.albums = value
-        });
-
+        this.albumService.setAlbumsState([]);
 
         this.albumService.getAllUserAlbums(this.authService.getUserMail()).subscribe({
             next: value => {
                 this.albumService.setAlbumsState(value);
             },
             error: err => {}
-        })
+        });
+
+        this.albumService.albumsState.subscribe({
+            next: value => this.albums = value
+        });
     }
 
     newAlbum() {

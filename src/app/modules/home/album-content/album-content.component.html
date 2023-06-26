@@ -28,22 +28,23 @@
 
     </div>
 
+
+    <h2 *ngIf="subAlbums.length !== 0">
+        <mat-icon>folder</mat-icon>
+        Albums
+    </h2>
     <div id="album-container" *ngIf="subAlbums.length !== 0">
-        <h2>
-            <mat-icon>folder</mat-icon>
-            Albums
-        </h2>
-        <div class="album" *ngFor="let subAlbum of subAlbums">
+        <div class="album" *ngFor="let subAlbum of subAlbums; let i = index;" (click)="openAlbum(i)">
             <mat-icon>folder</mat-icon>
             <h3> {{ subAlbum.name }} </h3>
         </div>
     </div>
 
+    <h2 *ngIf="allFiles.length !== 0">
+        <mat-icon>insert_drive_file</mat-icon>
+        Files
+    </h2>
     <div id="file-container" *ngIf="allFiles.length !== 0">
-        <h2>
-            <mat-icon>insert_drive_file</mat-icon>
-            Files
-        </h2>
         <div class="file" *ngFor="let file of allFiles" (click)="openFileOverview(file)">
             <h3>{{ getFileName(file) }}</h3>
             <p>{{ file.type }}</p>

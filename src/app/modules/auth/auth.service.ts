@@ -17,8 +17,7 @@ export class AuthService {
     goToCognitoLogin() {
         const redirectUri = encodeURIComponent('http://localhost:4200/');
 
-        const url = `https://${domain}.auth.${region}.amazoncognito.com/login?response_type=token&client_id=${clientId}
-        &redirect_uri=${redirectUri}`;
+        const url = `https://${domain}.auth.${region}.amazoncognito.com/login?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}`;
 
         window.location.href = url;
     }
@@ -28,8 +27,7 @@ export class AuthService {
         this.setUserLogged();
         const redirectUri = encodeURIComponent('http://localhost:4200/');
 
-        const url = `https://${domain}.auth.${region}.amazoncognito.com/logout?client_id=${clientId}
-        &logout_uri=${redirectUri}`;
+        const url = `https://${domain}.auth.${region}.amazoncognito.com/logout?client_id=${clientId}&logout_uri=${redirectUri}`;
 
         window.location.href = url;
     }

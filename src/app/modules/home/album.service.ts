@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Album} from "../../model/album";
 import {BehaviorSubject, Observable} from "rxjs";
+import {domain} from "../../environment";
 
 @Injectable({
   providedIn: 'root'
@@ -27,21 +28,20 @@ export class AlbumService {
     constructor(private http: HttpClient) { }
 
     public createAlbum(album: Album, email: String): Observable<any> {
-        return this.http.post<any>("https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com/dev/createAlbum/"
+        return this.http.post<any>( domain + "createAlbum/"
         + email, album);
     }
 
     public getAllUserAlbums(email: string): Observable<Album[]> {
-        return this.http.get<Album[]>("https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com/dev/getAllUserAlbums/"
-        + email);
+        return this.http.get<Album[]>(domain + "getAllUserAlbums/" + email);
     }
 
     public deleteAlbum(albumId: string) : Observable<any> {
-        return this.http.delete<any>("https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com/dev/deleteAlbum/" + albumId);
+        return this.http.delete<any>(domain + "deleteAlbum/" + albumId);
     }
 
     getSubAlbums(parentId: string): Observable<Album[]> {
-        return this.http.get<any>("https://0dmgwjtsd5.execute-api.eu-central-1.amazonaws.com/dev/getSubAlbums/" + parentId);
+        return this.http.get<any>(domain + "getSubAlbums/" + parentId);
     }
 
 }
