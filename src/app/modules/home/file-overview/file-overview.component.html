@@ -27,6 +27,13 @@
             <mat-icon>download</mat-icon>
             Download
         </a>
+        <h2>Add to album</h2>
+        <div class="add-to-albums-container">
+            <button class="available-album" *ngFor="let availableAlbum of availableAlbums; let i = index;" (click)="addToAlbum(i)">
+                <mat-icon>folder</mat-icon>
+                <h3> {{ availableAlbum.name }} </h3>
+            </button>
+        </div>
 
         <div class="update-delete-buttons">
             <button

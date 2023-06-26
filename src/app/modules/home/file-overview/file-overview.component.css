@@ -115,3 +115,39 @@
 #upload-file-change:hover {
     cursor: pointer;
 }
+
+.add-to-albums-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+
+.add-to-albums-container::-webkit-scrollbar {
+    height: 10px;
+    border-radius: 5px;
+    background: #0B2433;
+}
+
+.add-to-albums-container::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #34D8F5;
+}
+
+.available-album {
+    height: 40px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #F9F5FF;
+    border-radius: 30px;
+}
+
+.available-album:hover {
+    cursor: pointer;
+    background-color: #A1CDF1;
+}

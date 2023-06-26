@@ -5,6 +5,7 @@ import {getFileName, getFileTypeString} from "../../../file-helper";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MyFileService} from "../my-file.service";
 import {AuthService} from "../../auth/auth.service";
+import {Album} from "../../../model/album";
 
 
 
@@ -22,6 +23,7 @@ export class FileOverviewComponent implements OnInit{
     fileSize: number = 0;
     fileExtension: string | undefined = '';
     changedFileName: string = '';
+    availableAlbums: Album[] = []
 
     constructor(private dialogRef: MatDialogRef<FileOverviewComponent>,
                 @Inject(MAT_DIALOG_DATA) public file: MultimediaMetadata,
@@ -36,6 +38,12 @@ export class FileOverviewComponent implements OnInit{
     ngOnInit(): void {
         this.fileSize = this.file.size_in_kb;
         this.fileExtension = this.file.type;
+        this.myFileService.getAvailableAlbums(this.file.id).subscribe({
+            next: value => {
+                this.availableAlbums = value;
+            },
+            error: err => alert(err.error.message)
+        });
     }
 
 
@@ -110,5 +118,15 @@ export class FileOverviewComponent implements OnInit{
     }
 
 
+    addToAlbum(albumIndex: number) {
+        let selectedAlbum: Album = this.availableAlbums[albumIndex];
+        this.myFileService.addToAlbum(selectedAlbum.id, this.file.id).subscribe({
+            next: value => {
+                alert(value.message)
+                this.availableAlbums.splice(albumIndex, 1);
+            },
+            error: err => alert(err.error.message)
+        });
 
+    }
 }

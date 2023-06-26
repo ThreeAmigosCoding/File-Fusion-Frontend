@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {MultimediaMetadata} from "../../model/multimedia";
 import {domain} from "../../environment";
+import {Album} from "../../model/album";
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,13 @@ export class MyFileService {
 
   deleteFile(file: MultimediaMetadata): Observable<any> {
       return this.http.delete<any>(domain + "delete_file/" + file.id);
+  }
+
+  getAvailableAlbums(id: string): Observable<Album[]> {
+      return this.http.get<Album[]>(domain + "getAvailableAlbums/" + id);
+  }
+
+  addToAlbum(albumId: string, fileId: string): Observable<any> {
+      return this.http.get<any>(domain + "addToAlbum/" + albumId + "/" + fileId);
   }
 }
