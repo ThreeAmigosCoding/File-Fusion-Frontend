@@ -37,6 +37,9 @@
         <div class="album" *ngFor="let subAlbum of subAlbums; let i = index;" (click)="openAlbum(i)">
             <mat-icon>folder</mat-icon>
             <h3> {{ subAlbum.name }} </h3>
+            <button class="remove-album" (click)="removeAlbum(i); $event.stopPropagation()">
+                <mat-icon>close</mat-icon>
+            </button>
         </div>
     </div>
 
@@ -45,10 +48,13 @@
         Files
     </h2>
     <div id="file-container" *ngIf="allFiles.length !== 0">
-        <div class="file" *ngFor="let file of allFiles" (click)="openFileOverview(file)">
+        <div class="file" *ngFor="let file of allFiles; let i = index" (click)="openFileOverview(file)">
             <h3>{{ getFileName(file) }}</h3>
             <p>{{ file.type }}</p>
             <img [src]=getFilePreviewImageSource(file) alt="Image Placeholder">
+            <button class="remove-file" (click)="removeFile(i); $event.stopPropagation()">
+                <mat-icon>close</mat-icon>
+            </button>
         </div>
     </div>
 

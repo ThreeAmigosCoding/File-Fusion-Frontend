@@ -56,4 +56,8 @@ export class AlbumService {
         return this.http.get<MultimediaMetadata[]>(domain + "getAlbumContent/" + email + "/" + albumId);
     }
 
+    public removeContent(albumId: string, fileId: string): Observable<any> {
+        return this.http.delete<any>(domain + "removeContent/" + albumId + "/" + fileId);
+    }
+
 }

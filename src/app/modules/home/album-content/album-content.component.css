@@ -84,6 +84,7 @@ h1 {
 }
 
 .album {
+    position: relative;
     height: 40px;
     padding: 10px;
     display: flex;
@@ -95,12 +96,35 @@ h1 {
     border-radius: 10px;
 }
 
+.remove-album, .remove-file {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 25px;
+    height: 25px;
+    background-color: #3A4F50;
+    border-radius: 50%;
+    border: none;
+}
+
+.remove-album:hover, .remove-file:hover {
+    cursor: pointer;
+}
+
+.remove-album mat-icon, .remove-file mat-icon {
+    color: #F9F5FF;
+    transform: scale(0.7);
+    margin-left: -6px;
+
+}
+
 .album:hover{
     cursor: pointer;
     background-color: #A1CDF1;
 }
 
 .file {
+    position: relative;
     padding: 10px;
     display: flex;
     flex-direction: column;

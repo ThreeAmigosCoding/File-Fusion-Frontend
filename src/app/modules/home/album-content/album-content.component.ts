@@ -8,6 +8,8 @@ import {MyFileService} from "../my-file.service";
 import {AlbumService} from "../album.service";
 import {Router} from "@angular/router";
 import {AlbumCreationComponent} from "../album-creation/album-creation.component";
+import {FileOverviewComponent} from "../file-overview/file-overview.component";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-album-content',
@@ -70,7 +72,7 @@ export class AlbumContentComponent implements OnInit{
     protected readonly getFilePreviewImageSource = getFilePreviewImageSource;
 
     openFileOverview(file: any) {
-
+        this.dialog.open(FileOverviewComponent, {data: file})
     }
 
     deleteAlbum() {
@@ -126,16 +128,44 @@ export class AlbumContentComponent implements OnInit{
 
     openAlbum(i: number) {
         let album = this.subAlbums[i];
-        this.albumService.getSubAlbums(album.id).subscribe({
-            next: value => {
-                this.albumService.setAlbumsState(value);
-            }
-        });
-        this.albumService.getAlbumContent(this.authService.getUserMail(), album.id).subscribe({
-            next: value => this.albumService.setMultimediaState(value)
+
+        // Combine the two requests into a single observable
+        const combined = forkJoin({
+            subAlbums: this.albumService.getSubAlbums(album.id),
+            albumContent: this.albumService.getAlbumContent(this.authService.getUserMail(), album.id)
         });
 
-        this.albumService.setSelectedAlbumState(album);
-        this.router.navigate(['album-content']);
+        // Subscribe to the combined observable
+        combined.subscribe(({ subAlbums, albumContent }) => {
+            // These lines will execute once both requests have completed
+            this.albumService.setAlbumsState(subAlbums);
+            this.albumService.setMultimediaState(albumContent);
+
+            this.albumService.setSelectedAlbumState(album);
+            this.router.navigate(['album-content']);
+        });
+    }
+
+    removeFile(i: any) {
+        let file = this.allFiles[i];
+
+        if (!confirm('Are you sure you want to remove this file?')) return
+
+        this.albumService.removeContent(this.selectedAlbum.id, file.id).subscribe({
+            next: () => this.allFiles.splice(i, 1),
+            error: err => alert(err.error.message)
+        })
+    }
+
+    removeAlbum(i: number) {
+        let album = this.subAlbums[i];
+
+        if (!confirm('Are you sure you want to remove this album?')) return
+
+        this.albumService.deleteAlbum(album.id).subscribe({
+            next: () => this.subAlbums.splice(i, 1),
+            error: err => alert(err.error.message)
+        });
+
     }
 }
