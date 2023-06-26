@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {AlbumCreationComponent} from "../album-creation/album-creation.component";
 import {FileOverviewComponent} from "../file-overview/file-overview.component";
 import {forkJoin} from "rxjs";
+import {ShareComponent} from "../share/share.component";
 
 @Component({
   selector: 'app-album-content',
@@ -33,7 +34,8 @@ export class AlbumContentComponent implements OnInit{
                 public dialog: MatDialog,
                 private myFileService: MyFileService,
                 private albumService: AlbumService,
-                private router: Router) {
+                private router: Router,
+                public shareDialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -167,5 +169,13 @@ export class AlbumContentComponent implements OnInit{
             error: err => alert(err.error.message)
         });
 
+    }
+
+    shareAlbum() {
+        let content = {
+            id: this.selectedAlbum.id,
+            type: 'album'
+        }
+        this.shareDialog.open(ShareComponent, {data: content})
     }
 }
