@@ -38,7 +38,7 @@ export class FileOverviewComponent implements OnInit{
     ngOnInit(): void {
         this.fileSize = this.file.size_in_kb;
         this.fileExtension = this.file.type;
-        this.myFileService.getAvailableAlbums(this.file.id).subscribe({
+        this.myFileService.getAvailableAlbums(this.authService.getUserMail(), this.file.id).subscribe({
             next: value => {
                 this.availableAlbums = value;
             },
