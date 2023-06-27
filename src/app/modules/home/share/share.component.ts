@@ -48,6 +48,10 @@ export class ShareComponent implements OnInit{
 
     addEmail(email: string) {
         if(email == '') return;
+        if(this.members.includes(email)) {
+            alert('The content has already been shared with the user ' + email);
+            return;
+        }
         if (this.emailList.includes(email)) return;
         this.emailList.push(email)
         this.inviteForm.get('email')!.setValue('');

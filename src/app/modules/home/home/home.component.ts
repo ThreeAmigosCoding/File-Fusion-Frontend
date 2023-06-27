@@ -55,7 +55,11 @@ export class HomeComponent implements OnInit{
 
 
     openFileOverview(file: MultimediaMetadata) {
-        this.fileOverviewDialog.open(FileOverviewComponent, {data: file})
+        let fileData = {
+            file: file,
+            isOwner: true
+        }
+        this.fileOverviewDialog.open(FileOverviewComponent, {data: fileData})
     }
 
     upload($event: any) {

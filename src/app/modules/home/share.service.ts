@@ -28,4 +28,12 @@ export class ShareService {
       return this.http.delete(domain + "removeSharePermissions/" + ownerEmail + "/" + viewerEmail + "/" + contentId)
   }
 
+  getSharedAlbums(email: string): Observable<any> {
+      return this.http.get<any>(domain + "getSharedAlbums/" + email);
+  }
+
+  getSharedFiles(email: string): Observable<any> {
+      return this.http.get<any>(domain + "getSharedFiles/" + email);
+  }
+
 }

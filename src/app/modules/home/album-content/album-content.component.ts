@@ -19,6 +19,8 @@ import {ShareComponent} from "../share/share.component";
 })
 export class AlbumContentComponent implements OnInit{
 
+    isOwner: boolean = false;
+
     selectedAlbum: Album = {
         id: "",
         deleted: false,
@@ -41,7 +43,14 @@ export class AlbumContentComponent implements OnInit{
     ngOnInit(): void {
         this.albumService.setAlbumsState([]);
         this.albumService.selectedAlbumState.subscribe({
-            next: value => this.selectedAlbum = value
+            next: value => {
+                this.selectedAlbum = value
+                this.isOwner = this.selectedAlbum.owner === this.authService.getUserMail()
+                this.albumService.setMultimediaState([]);
+                this.albumService.getAlbumContent(this.selectedAlbum.owner, this.selectedAlbum.id).subscribe({
+                    next: value => this.albumService.setMultimediaState(value)
+                });
+            }
         });
 
         this.albumService.albumsState.subscribe({
@@ -55,15 +64,10 @@ export class AlbumContentComponent implements OnInit{
             }
         });
 
-        this.albumService.setMultimediaState([]);
-
         this.albumService.multimediaState.subscribe({
             next: value => this.allFiles = value
         });
 
-        this.albumService.getAlbumContent(this.authService.getUserMail(), this.selectedAlbum.id).subscribe({
-            next: value => this.albumService.setMultimediaState(value)
-        });
     }
 
     newAlbum() {
@@ -74,7 +78,11 @@ export class AlbumContentComponent implements OnInit{
     protected readonly getFilePreviewImageSource = getFilePreviewImageSource;
 
     openFileOverview(file: any) {
-        this.dialog.open(FileOverviewComponent, {data: file})
+        let fileData = {
+            file: file,
+            isOwner: this.isOwner
+        }
+        this.dialog.open(FileOverviewComponent, {data: fileData})
     }
 
     deleteAlbum() {
