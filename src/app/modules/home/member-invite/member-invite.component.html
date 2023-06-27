@@ -17,6 +17,7 @@
         <button
             class="add-email-button"
             mat-button
+            type="submit"
             [disabled]="inviteMemberForm.get('email')?.invalid"
             (click)="inviteMemberForm.value.email && invite(inviteMemberForm.value.email)">
             <mat-icon>call_made</mat-icon>

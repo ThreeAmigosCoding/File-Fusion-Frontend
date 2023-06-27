@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FamilyMemberService} from "../family-member.service";
 
 @Component({
   selector: 'app-member-registration',
@@ -31,7 +32,8 @@ export class MemberRegistrationComponent implements OnInit{
         inviterEmail: new FormControl("", [Validators.email, Validators.required]),
     })
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute, private familyMemberService: FamilyMemberService,
+                private router: Router) {}
 
     ngOnInit() {
         this.route.params.subscribe(params => {
@@ -41,6 +43,23 @@ export class MemberRegistrationComponent implements OnInit{
     }
 
     createRegistrationRequest() {
+        if (!this.memberRegistrationForm.valid) return;
 
+        let registrationInfo = {
+            email: String(this.memberRegistrationForm.value.email),
+            password: String(this.memberRegistrationForm.value.password),
+            name: String(this.memberRegistrationForm.value.name),
+            family_name: String(this.memberRegistrationForm.value.familyName),
+            address: String(this.memberRegistrationForm.value.address)
+        }
+
+        this.familyMemberService.createRequest(registrationInfo,
+            String(this.memberRegistrationForm.value.inviterEmail)).subscribe({
+            next: value => {
+                alert(value.message);
+                this.router.navigate(['home']);
+            },
+            error: err => alert(err.message)
+        });
     }
 }

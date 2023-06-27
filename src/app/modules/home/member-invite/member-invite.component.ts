@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {AuthService} from "../../auth/auth.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -10,7 +10,7 @@ import {FamilyMember} from "../../../model/family-member";
   templateUrl: './member-invite.component.html',
   styleUrls: ['./member-invite.component.css']
 })
-export class MemberInviteComponent {
+export class MemberInviteComponent implements OnInit{
 
     membersList: FamilyMember[] = []
 
@@ -23,6 +23,17 @@ export class MemberInviteComponent {
                 private authService: AuthService, private familyMemberService: FamilyMemberService) {
     }
 
+    ngOnInit() {
+        this.familyMemberService.getAllMembers(this.authService.getUserMail(), "accepted").subscribe({
+            next: currentMembers => this.membersList = currentMembers,
+            error: err => alert(err.message)
+        });
+        this.familyMemberService.getAllMembers(this.authService.getUserMail(), "pending").subscribe({
+            next: pendingMembers => this.pendingMembers = pendingMembers,
+            error: err => alert(err.message)
+        });
+    }
+
     invite(email: string) {
         this.familyMemberService.inviteMember(email, this.authService.getUserMail()).subscribe({
            next: value => alert(value.message),
@@ -31,19 +42,16 @@ export class MemberInviteComponent {
         this.dialogRef.close();
     }
 
-    removeMember(i: number) {
-        if (!confirm("Are you sure you want to remove this member?")) return;
-    }
 
     manageRequest(request_id: string, action: string) {
         this.familyMemberService.manageRequest(request_id, action).subscribe({
            next: value => {
                alert(value.message);
-               this.familyMemberService.getAllCurrentMembers(this.authService.getUserMail()).subscribe({
+               this.familyMemberService.getAllMembers(this.authService.getUserMail(), "accepted").subscribe({
                   next: currentMembers => this.membersList = currentMembers,
                   error: err => alert(err.message)
                });
-               this.familyMemberService.getAllPendingMembers(this.authService.getUserMail()).subscribe({
+               this.familyMemberService.getAllMembers(this.authService.getUserMail(), "pending").subscribe({
                    next: pendingMembers => this.pendingMembers = pendingMembers,
                    error: err => alert(err.message)
                });

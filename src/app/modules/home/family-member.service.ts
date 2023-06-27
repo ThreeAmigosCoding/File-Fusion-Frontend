@@ -20,16 +20,12 @@ export class FamilyMemberService {
         return this.http.get<any>(domain + "sendInvite/" + inviter + "/" + member);
     }
 
-    createRequest(member: FamilyMember, inviter: string): Observable<any>{
+    createRequest(member: any, inviter: string): Observable<any>{
         return this.http.post<any>(domain + "createRegistrationRequest/" + inviter +
             "/" + member.email, member);
     }
 
-    getAllCurrentMembers(inviter: string): Observable<any>{
-        return new Observable<any>();
-    }
-
-    getAllPendingMembers(inviter: string): Observable<any>{
-        return new Observable<any>();
+    getAllMembers(inviter: string, invitationStatus: string): Observable<FamilyMember[]>{
+        return this.http.get<FamilyMember[]>(domain+ "getMembersByStatus/" + inviter + "/" + invitationStatus);
     }
 }
