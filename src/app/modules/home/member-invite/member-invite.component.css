@@ -46,11 +46,11 @@ h1 {
 
 .member {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10px;
     background-color: #E1F3FA;
     color: #0B2433;
-    padding: 0 10px;
+    padding: 10px;
     align-items: center;
     border-radius: 30px;
 }
@@ -75,4 +75,20 @@ h1 {
     color: #E1F3FA;
     transform: scale(0.8);
     margin-left: -6px;
+}
+
+.red{
+    background-color: #F84A4A;
+}
+
+.blue{
+    background-color: #34D8F5;
+}
+
+.accept-decline-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 22px;
+    border-radius: 30px;
 }

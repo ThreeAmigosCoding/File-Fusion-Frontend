@@ -1,15 +1,10 @@
 <form
     [formGroup]="inviteMemberForm"
     class="invite-member-container">
-    <h1 *ngIf="membersList.length != 0">Members</h1>
+    <h1 *ngIf="membersList.length != 0">My members</h1>
     <div class="current-members">
         <div class="member" *ngFor="let member of membersList; let i = index">
-            <h3>{{member}}</h3>
-            <button
-                class="remove-member-button"
-                (click)="removeMember(i)">
-                <mat-icon>close</mat-icon>
-            </button>
+            <h3>{{member.email}}</h3>
         </div>
     </div>
     <h1>Invite member</h1>
@@ -27,6 +22,30 @@
             <mat-icon>call_made</mat-icon>
             Invite
         </button>
+    </div>
+    <h1 *ngIf="pendingMembers.length != 0">Pending members</h1>
+    <div class="current-members">
+        <div class="member" *ngFor="let member of pendingMembers; let i = index">
+            <h3>{{member.email}}</h3>
+            <div class="accept-decline-buttons">
+                <button
+                    type="button"
+                    class="blue"
+                    mat-button
+                    (click)="manageRequest(member.id, 'accept')">
+                    <mat-icon>check</mat-icon>
+                    Accept
+                </button>
+                <button
+                    type="button"
+                    class="red"
+                    mat-button
+                    (click)="manageRequest(member.id, 'decline')">
+                    <mat-icon>close</mat-icon>
+                    Decline
+                </button>
+            </div>
+        </div>
     </div>
 </form>
 

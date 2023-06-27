@@ -39,7 +39,7 @@ export class NavBarComponent implements OnInit{
     }
 
     members() {
-        this.membersDialog.open(MemberInviteComponent)
+        this.membersDialog.open(MemberInviteComponent);
     }
 
     signOut() {

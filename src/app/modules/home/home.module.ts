@@ -18,6 +18,7 @@ import {SafePipe} from "./file-overview/safe-pipe";
 import { AlbumContentComponent } from './album-content/album-content.component';
 import { ShareComponent } from './share/share.component';
 import { MemberInviteComponent } from './member-invite/member-invite.component';
+import { MemberRegistrationComponent } from './member-registration/member-registration.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MemberInviteComponent } from './member-invite/member-invite.component';
     SafePipe,
     AlbumContentComponent,
     ShareComponent,
-    MemberInviteComponent
+    MemberInviteComponent,
+    MemberRegistrationComponent
   ],
     imports: [
         CommonModule,
