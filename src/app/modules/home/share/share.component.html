@@ -36,6 +36,7 @@
             <h3>{{mail}}</h3>
             <button
                 class="remove-email-button"
+                type="button"
                 (click)="removeEmail(i)">
                 <mat-icon>close</mat-icon>
             </button>
@@ -44,8 +45,7 @@
     <button *ngIf="emailList.length != 0"
         class="invite-button"
         mat-button
-        type="submit"
-        (click)="share()">
+        type="submit">
         <mat-icon>share</mat-icon>
         Share
     </button>

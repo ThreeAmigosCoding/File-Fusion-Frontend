@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MultimediaMetadata} from "../../../model/multimedia";
@@ -10,10 +10,10 @@ import {ShareService} from "../share.service";
   templateUrl: './share.component.html',
   styleUrls: ['./share.component.css']
 })
-export class ShareComponent {
+export class ShareComponent implements OnInit{
 
     emailList: string[] = []
-    members: string[] = ["email@example.com", "email2@example.com"]
+    members: string[] = []
 
     inviteForm = new FormGroup({
         email: new FormControl('', Validators.email)
@@ -25,11 +25,22 @@ export class ShareComponent {
 
     }
 
+    ngOnInit() {
+        this.shareService.getSharedUsers(this.authService.getUserMail(), this.content.id)
+            .subscribe({
+                next: value => {
+                    this.members = value;
+                },
+                error: err => alert(err.error.message)
+            });
+    }
+
     share() {
         this.shareService.share(this.authService.getUserMail(), this.content.id, this.content.type, this.emailList)
             .subscribe({
                 next: value => {
                     alert(value.message)
+                    this.dialogRef.close()
                 },
                 error: err => alert(err.error.message)
             });
@@ -37,6 +48,10 @@ export class ShareComponent {
 
     addEmail(email: string) {
         if(email == '') return;
+        if(this.members.includes(email)) {
+            alert('The content has already been shared with the user ' + email);
+            return;
+        }
         if (this.emailList.includes(email)) return;
         this.emailList.push(email)
         this.inviteForm.get('email')!.setValue('');
@@ -48,5 +63,13 @@ export class ShareComponent {
 
     removeMember(i: number) {
         if (!confirm("Are you sure you want to stop sharing this file with " + this.members[i] + "?")) return;
+        this.shareService.removeSharePermissions(this.authService.getUserMail(), this.members[i], this.content.id)
+            .subscribe({
+                next: value => {
+                    alert(value.message)
+                    this.members.splice(i, 1);
+                },
+                error: err => alert(err.error.message)
+            });
     }
 }

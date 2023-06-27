@@ -1,41 +1,42 @@
 <div class="file-overview-container">
     <div class="file-view">
-        <img *ngIf="getFileTypeString(file) === 'image'" src="{{file.data_url}}" alt="Image Placeholder">
-        <audio controls *ngIf="getFileTypeString(file) === 'audio'">
-            <source [src]="file.data_url" type="audio/{{file.type}}" />
+        <img *ngIf="getFileTypeString(fileData.file) === 'image'" src="{{fileData.file.data_url}}" alt="Image Placeholder">
+        <audio controls *ngIf="getFileTypeString(fileData.file) === 'audio'">
+            <source [src]="fileData.file.data_url" type="audio/{{fileData.file.type}}" />
             Your browser does not support the audio element.
         </audio>
-        <video controls *ngIf="getFileTypeString(file) === 'video'" width="100%" height="100%">
-            <source [src]="file.data_url" type="video/{{file.type}}" />
+        <video controls *ngIf="getFileTypeString(fileData.file) === 'video'" width="100%" height="100%">
+            <source [src]="fileData.file.data_url" type="video/{{fileData.file.type}}" />
             Your browser does not support the video element.
         </video>
-        <h1 *ngIf="getFileTypeString(file) === 'unknown'">Preview not available.</h1>
+        <h1 *ngIf="getFileTypeString(fileData.file) === 'unknown'">Preview not available.</h1>
     </div>
     <div *ngIf="!editMode" class="metadata">
-        <h1>{{getFileName(file)}}</h1>
-        <h2 *ngIf="file.description.length != 0">Description:</h2>
-        <p *ngIf="file.description.length != 0">{{file.description}}</p>
-        <p>Size: {{(file.size_in_kb).toFixed(2)}} kB</p>
-        <p>Type: {{file.type}}</p>
-        <p>Created at: {{file.created_at | date:'dd.MM.yyyy. HH:mm'}}</p>
-        <p>Last changed: {{file.last_changed | date:'dd.MM.yyyy. HH:mm'}}</p>
+        <h1>{{getFileName(fileData.file)}}</h1>
+        <h2 *ngIf="!isOwner">Owner: {{fileData.file.username}}</h2>
+        <h2 *ngIf="fileData.file.description.length != 0">Description:</h2>
+        <p *ngIf="fileData.file.description.length != 0">{{fileData.file.description}}</p>
+        <p>Size: {{(fileData.file.size_in_kb).toFixed(2)}} kB</p>
+        <p>Type: {{fileData.file.type}}</p>
+        <p>Created at: {{fileData.file.created_at | date:'dd.MM.yyyy. HH:mm'}}</p>
+        <p>Last changed: {{fileData.file.last_changed | date:'dd.MM.yyyy. HH:mm'}}</p>
         <div class="download-share-container">
             <a
                 id="download-button"
                 mat-button
-                [href]="file.data_url"
-                [download]="getFileName(file)">
+                [href]="fileData.file.data_url"
+                [download]="getFileName(fileData.file)">
                 <mat-icon>download</mat-icon>
                 Download
             </a>
-            <button mat-button class="share-file" (click)="openShareComponent()">
+            <button *ngIf="isOwner" mat-button class="share-file" (click)="openShareComponent()">
                 <mat-icon>share</mat-icon>
                 Share
             </button>
         </div>
 
-        <h2>Add to album</h2>
-        <div class="add-to-albums-container">
+        <h2 *ngIf="isOwner">Add to album</h2>
+        <div *ngIf="isOwner" class="add-to-albums-container">
             <button class="available-album" *ngFor="let availableAlbum of availableAlbums; let i = index;" (click)="addToAlbum(i)">
                 <mat-icon>folder</mat-icon>
                 <h3> {{ availableAlbum.name }} </h3>
@@ -43,7 +44,7 @@
         </div>
 
 
-        <div class="update-delete-buttons">
+        <div *ngIf="isOwner" class="update-delete-buttons">
             <button
                 id="update-file-button"
                 mat-button

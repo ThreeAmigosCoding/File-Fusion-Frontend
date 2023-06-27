@@ -3,4 +3,29 @@
         <mat-icon class="icon-display">share</mat-icon>
         Shared with me
     </h1>
+
+    <h2 *ngIf="albums.length !== 0">
+        <mat-icon>folder</mat-icon>
+        Albums
+    </h2>
+    <div id="album-container" *ngIf="albums.length !== 0">
+        <div class="album" *ngFor="let album of albums; let i = index;" (click)="openAlbum(i)">
+            <mat-icon>folder</mat-icon>
+            <h3> {{ album.name }} </h3>
+        </div>
+    </div>
+
+    <h2 *ngIf="files.length !== 0">
+        <mat-icon>insert_drive_file</mat-icon>
+        Files
+    </h2>
+    <div id="file-container" *ngIf="files.length !== 0">
+        <div class="file" *ngFor="let file of files; let i = index" (click)="openFileOverview(file)">
+            <h3>{{ getFileName(file) }}</h3>
+            <p>{{ file.type }}</p>
+            <p>{{ file.username }}</p>
+            <img [src]=getFilePreviewImageSource(file) alt="Image Placeholder">
+        </div>
+    </div>
+
 </div>
