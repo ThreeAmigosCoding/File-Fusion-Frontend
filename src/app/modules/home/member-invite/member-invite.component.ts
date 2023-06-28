@@ -37,7 +37,7 @@ export class MemberInviteComponent implements OnInit{
     invite(email: string) {
         this.familyMemberService.inviteMember(email, this.authService.getUserMail()).subscribe({
            next: value => alert(value.message),
-           error: err => alert(err.message)
+           error: err => alert(err.error.message)
         });
         this.dialogRef.close();
     }
