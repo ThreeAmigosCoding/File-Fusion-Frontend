@@ -18,6 +18,7 @@
                 <img [src]=getFilePreviewImageSource(file) alt="Image Placeholder">
             </div>
         </div>
+        <h2 id="no-files-message" *ngIf="allFiles.length === 0">You currently don't have any files uploaded.</h2>
     </div>
 
     <img *ngIf="user === ''" src="assets/images/Logo.png" id="background-image">

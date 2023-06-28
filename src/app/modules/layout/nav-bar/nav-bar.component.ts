@@ -21,8 +21,11 @@ export class NavBarComponent implements OnInit{
         this.authService.userLoggedState$.subscribe({
            next: value => {
                this.user = value;
+               this.authService.checkTokenValidity()
            }
         });
+
+
 
     }
 
