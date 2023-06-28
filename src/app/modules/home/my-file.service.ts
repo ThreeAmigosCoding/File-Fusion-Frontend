@@ -32,8 +32,8 @@ export class MyFileService {
       return this.http.delete<any>(domain + "delete_file/" + file.id);
   }
 
-  getAvailableAlbums(id: string): Observable<Album[]> {
-      return this.http.get<Album[]>(domain + "getAvailableAlbums/" + id);
+  getAvailableAlbums(email: string, id: string): Observable<Album[]> {
+      return this.http.get<Album[]>(domain + "getAvailableAlbums/" + email + "/" + id);
   }
 
   addToAlbum(albumId: string, fileId: string): Observable<any> {

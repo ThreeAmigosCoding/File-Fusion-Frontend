@@ -43,7 +43,7 @@ export class AlbumsComponent implements OnInit{
 
     openAlbum(index: number) {
         let album = this.albums[index];
-        this.router.navigate(['album-content']);
         this.albumService.setSelectedAlbumState(album);
+        this.router.navigate(['album-content']);
     }
 }

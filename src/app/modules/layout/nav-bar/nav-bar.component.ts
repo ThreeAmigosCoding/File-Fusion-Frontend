@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../auth/auth.service";
+import {MatDialog} from "@angular/material/dialog";
+import {MemberInviteComponent} from "../../home/member-invite/member-invite.component";
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,15 +13,19 @@ export class NavBarComponent implements OnInit{
 
     user: string = "";
 
-    constructor(private router: Router, private authService: AuthService) {
+    constructor(private router: Router, private authService: AuthService,
+                public membersDialog: MatDialog) {
     }
 
     ngOnInit(): void {
         this.authService.userLoggedState$.subscribe({
            next: value => {
                this.user = value;
+               this.authService.checkTokenValidity()
            }
         });
+
+
 
     }
 
@@ -33,6 +39,10 @@ export class NavBarComponent implements OnInit{
 
     sharedWithMe() {
         this.router.navigate(['shared-with-me']);
+    }
+
+    members() {
+        this.membersDialog.open(MemberInviteComponent);
     }
 
     signOut() {

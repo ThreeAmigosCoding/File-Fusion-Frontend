@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {AlbumCreationComponent} from "../album-creation/album-creation.component";
 import {FileOverviewComponent} from "../file-overview/file-overview.component";
 import {forkJoin} from "rxjs";
+import {ShareComponent} from "../share/share.component";
 
 @Component({
   selector: 'app-album-content',
@@ -17,6 +18,8 @@ import {forkJoin} from "rxjs";
   styleUrls: ['./album-content.component.css']
 })
 export class AlbumContentComponent implements OnInit{
+
+    isOwner: boolean = false;
 
     selectedAlbum: Album = {
         id: "",
@@ -33,13 +36,21 @@ export class AlbumContentComponent implements OnInit{
                 public dialog: MatDialog,
                 private myFileService: MyFileService,
                 private albumService: AlbumService,
-                private router: Router) {
+                private router: Router,
+                public shareDialog: MatDialog) {
     }
 
     ngOnInit(): void {
         this.albumService.setAlbumsState([]);
         this.albumService.selectedAlbumState.subscribe({
-            next: value => this.selectedAlbum = value
+            next: value => {
+                this.selectedAlbum = value
+                this.isOwner = this.selectedAlbum.owner === this.authService.getUserMail()
+                this.albumService.setMultimediaState([]);
+                this.albumService.getAlbumContent(this.selectedAlbum.owner, this.selectedAlbum.id).subscribe({
+                    next: value => this.albumService.setMultimediaState(value)
+                });
+            }
         });
 
         this.albumService.albumsState.subscribe({
@@ -53,15 +64,10 @@ export class AlbumContentComponent implements OnInit{
             }
         });
 
-        this.albumService.setMultimediaState([]);
-
         this.albumService.multimediaState.subscribe({
             next: value => this.allFiles = value
         });
 
-        this.albumService.getAlbumContent(this.authService.getUserMail(), this.selectedAlbum.id).subscribe({
-            next: value => this.albumService.setMultimediaState(value)
-        });
     }
 
     newAlbum() {
@@ -72,7 +78,11 @@ export class AlbumContentComponent implements OnInit{
     protected readonly getFilePreviewImageSource = getFilePreviewImageSource;
 
     openFileOverview(file: any) {
-        this.dialog.open(FileOverviewComponent, {data: file})
+        let fileData = {
+            file: file,
+            isOwner: this.isOwner
+        }
+        this.dialog.open(FileOverviewComponent, {data: fileData})
     }
 
     deleteAlbum() {
@@ -167,5 +177,13 @@ export class AlbumContentComponent implements OnInit{
             error: err => alert(err.error.message)
         });
 
+    }
+
+    shareAlbum() {
+        let content = {
+            id: this.selectedAlbum.id,
+            type: 'album'
+        }
+        this.shareDialog.open(ShareComponent, {data: content})
     }
 }

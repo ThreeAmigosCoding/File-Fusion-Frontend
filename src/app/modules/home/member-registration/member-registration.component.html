@@ -1,0 +1,46 @@
+<div id="member-registration">
+    <form [formGroup]="memberRegistrationForm"
+    (ngSubmit)="createRegistrationRequest()"
+    id="member-registration-form">
+
+        <h1> Sign up</h1>
+
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>E-mail</mat-label>
+            <input matInput  type="text" [readonly]="true" name="email" formControlName="email"/>
+            <mat-error *ngIf="memberRegistrationForm?.get('email')?.invalid">E-mail invalid.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Name</mat-label>
+            <input matInput type="text" name="name" formControlName="name"/>
+            <mat-error *ngIf="memberRegistrationForm?.get('name')?.invalid">Name invalid.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Family name</mat-label>
+            <input matInput type="text" name="familyName" formControlName="familyName"/>
+            <mat-error *ngIf="memberRegistrationForm?.get('familyName')?.invalid">Family name invalid.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Address</mat-label>
+            <input matInput type="text" name="address" formControlName="address"/>
+            <mat-error *ngIf="memberRegistrationForm?.get('address')?.invalid">Address invalid.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" formControlName="password"/>
+            <mat-error *ngIf="memberRegistrationForm?.get('password')?.invalid">Password invalid.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Inviter E-mail</mat-label>
+            <input matInput type="text" [readonly]="true" name="inviterEmail" formControlName="inviterEmail"/>
+            <mat-error *ngIf="memberRegistrationForm?.get('inviterEmail')?.invalid">Inviter E-mail invalid.</mat-error>
+        </mat-form-field>
+
+        <button mat-button [disabled]="memberRegistrationForm.invalid" type="submit">Sign up</button>
+    </form>
+</div>

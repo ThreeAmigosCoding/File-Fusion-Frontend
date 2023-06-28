@@ -15,19 +15,26 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
       const url = window.location.href;
-      const queryParams = new URLSearchParams(url.split('#')[1]);
-      // Extract the id_token from the query parameters
-      const idToken = queryParams.get('id_token');
+      if (url.includes("registerAsMember")){
+          this.router.navigate(['member-registration/' + url.split('/')[4] + '/' +
+            url.split('/')[5]]);
 
-      if (idToken) {
-          localStorage.setItem('user', idToken);
-          this.authService.setUserLogged();
       }
+      else{
+          const queryParams = new URLSearchParams(url.split('#')[1]);
+          // Extract the id_token from the query parameters
+          const idToken = queryParams.get('id_token');
 
-      if (this.authService.isLoggedIn())
-          this.authService.setUserLogged();
+          if (idToken) {
+              localStorage.setItem('user', idToken);
+              this.authService.setUserLogged();
+          }
+
+          if (this.authService.isLoggedIn())
+              this.authService.setUserLogged();
 
 
-      this.router.navigate(['home']);
+          this.router.navigate(['home']);
+      }
   }
 }

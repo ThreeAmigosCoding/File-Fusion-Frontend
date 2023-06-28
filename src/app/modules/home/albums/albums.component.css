@@ -37,6 +37,14 @@ h1 {
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
+}
+
+#no-albums-message {
+    top: 45%;
+    left: calc(50% - 300px);
+    position: absolute;
+    color: #0B2433;
 }
 
 #album-container {

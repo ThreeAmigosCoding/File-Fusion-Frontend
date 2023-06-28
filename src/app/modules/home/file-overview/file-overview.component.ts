@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MultimediaMetadata} from "../../../model/multimedia";
 import {getFileName, getFileTypeString} from "../../../file-helper";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MyFileService} from "../my-file.service";
 import {AuthService} from "../../auth/auth.service";
 import {Album} from "../../../model/album";
+import {ShareComponent} from "../share/share.component";
 
 
 
@@ -17,6 +18,7 @@ import {Album} from "../../../model/album";
 export class FileOverviewComponent implements OnInit{
 
     editMode: boolean = false;
+    isOwner: boolean = false;
     protected readonly getFileName = getFileName;
     protected readonly getFileTypeString = getFileTypeString;
     encodedFile: string = '';
@@ -26,19 +28,21 @@ export class FileOverviewComponent implements OnInit{
     availableAlbums: Album[] = []
 
     constructor(private dialogRef: MatDialogRef<FileOverviewComponent>,
-                @Inject(MAT_DIALOG_DATA) public file: MultimediaMetadata,
-                private myFileService: MyFileService, private authService: AuthService) {
+                @Inject(MAT_DIALOG_DATA) public fileData: any,
+                private myFileService: MyFileService, private authService: AuthService,
+                public shareDialog: MatDialog) {
     }
 
     updateFileForm = new FormGroup({
-        name: new FormControl(getFileName(this.file), Validators.required),
-        description: new FormControl(this.file.description),
+        name: new FormControl(getFileName(this.fileData.file), Validators.required),
+        description: new FormControl(this.fileData.file.description),
     });
 
     ngOnInit(): void {
-        this.fileSize = this.file.size_in_kb;
-        this.fileExtension = this.file.type;
-        this.myFileService.getAvailableAlbums(this.file.id).subscribe({
+        this.fileSize = this.fileData.file.size_in_kb;
+        this.fileExtension = this.fileData.file.type;
+        this.isOwner = this.fileData.isOwner;
+        this.myFileService.getAvailableAlbums(this.authService.getUserMail(), this.fileData.file.id).subscribe({
             next: value => {
                 this.availableAlbums = value;
             },
@@ -50,8 +54,8 @@ export class FileOverviewComponent implements OnInit{
     switchUpdateMode() {
         this.editMode = !this.editMode;
         this.changedFileName = ''
-        this.fileSize = this.file.size_in_kb;
-        this.fileExtension = this.file.type;
+        this.fileSize = this.fileData.file.size_in_kb;
+        this.fileExtension = this.fileData.file.type;
         this.encodedFile = '';
     }
 
@@ -95,7 +99,7 @@ export class FileOverviewComponent implements OnInit{
             description: this.updateFileForm.value.description,
             file: this.encodedFile
         }
-        this.myFileService.updateFile(this.file.id, changedFile).subscribe({
+        this.myFileService.updateFile(this.fileData.file.id, changedFile).subscribe({
             next: value => {
                 window.location.reload();
             },
@@ -106,7 +110,7 @@ export class FileOverviewComponent implements OnInit{
 
     delete() {
         if (confirm('Are you sure you want to delete this file?')) {
-            this.myFileService.deleteFile(this.file).subscribe({
+            this.myFileService.deleteFile(this.fileData.file).subscribe({
                 next: value => {
                     alert(value.message)
                     window.location.reload();
@@ -120,7 +124,7 @@ export class FileOverviewComponent implements OnInit{
 
     addToAlbum(albumIndex: number) {
         let selectedAlbum: Album = this.availableAlbums[albumIndex];
-        this.myFileService.addToAlbum(selectedAlbum.id, this.file.id).subscribe({
+        this.myFileService.addToAlbum(selectedAlbum.id, this.fileData.file.id).subscribe({
             next: value => {
                 alert(value.message)
                 this.availableAlbums.splice(albumIndex, 1);
@@ -128,5 +132,13 @@ export class FileOverviewComponent implements OnInit{
             error: err => alert(err.error.message)
         });
 
+    }
+
+    openShareComponent() {
+        let content = {
+            id: this.fileData.file.id,
+            type: 'file'
+        }
+        this.shareDialog.open(ShareComponent, {data: content})
     }
 }
