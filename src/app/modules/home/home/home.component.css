@@ -1,0 +1,112 @@
+#top-container {
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+h1 {
+    margin: 0;
+    color: #0B2433;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+#upload-file {
+    font-size: 24px;
+    margin-right: 20px;
+    background-color: #34D8F5;
+    border-radius: 30px;
+    padding: 10px 20px;
+    height: 36px;
+    text-align: center;
+}
+
+#upload-file:hover {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+#upload-file mat-icon {
+    margin-bottom: -5px;
+    transform: scale(1.2);
+    margin-right: 5px;
+}
+
+.icon-display {
+    transform: scale(1.4);
+}
+
+#main-container{
+    width: 100%;
+    height: 100vh;
+}
+
+#home-content {
+    height: 100%;
+    width: calc(100vw - 300px);
+    overflow-y: auto;
+    position: relative;
+}
+
+#no-files-message {
+    top: 45%;
+    left: calc(50% - 300px);
+    position: absolute;
+    color: #0B2433;
+}
+
+#files-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 20px 0 20px;
+}
+
+#home-content::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 4px;
+    background: #0B2433;
+}
+
+#home-content::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #34D8F5;
+}
+
+.file {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #F9F5FF;
+    border-radius: 10px;
+    max-width: 200px;
+}
+
+.file:hover{
+    cursor: pointer;
+    background-color: #A1CDF1;
+}
+
+.file h3, .file p {
+    margin: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.file img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+#background-image{
+    width: calc(100vw - 300px);
+    object-fit: cover;
+    height: 100%;
+    margin-bottom: -15px;
+}

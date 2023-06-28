@@ -1,0 +1,52 @@
+<div id="nav-bar">
+    <div id="buttons-container" *ngIf = "user !== ''">
+        <h2> File Fusion</h2>
+        <button
+            class="nav-button"
+            mat-button
+            (click)="home()">
+                <mat-icon>home</mat-icon>
+                Home
+        </button>
+        <button
+            class="nav-button"
+            mat-button
+            (click)="albums()">
+                <mat-icon>folder</mat-icon>
+                Albums
+        </button>
+        <button
+            class="nav-button"
+            mat-button
+            (click)="sharedWithMe()">
+                <mat-icon>share</mat-icon>
+                Shared with me
+        </button>
+        <button
+            class="nav-button"
+            mat-button
+            (click)="members()">
+            <mat-icon>people</mat-icon>
+            Members
+        </button>
+        <button
+            class="nav-button"
+            id="sign-out-button"
+            mat-button
+            (click)="signOut()">
+            <mat-icon>logout</mat-icon>
+            Sign Out
+        </button>
+    </div>
+
+    <div id="login-container" *ngIf="user === ''">
+        <h2> File Fusion</h2>
+        <button
+            class="nav-button"
+            mat-button
+            (click)="login()">
+            <mat-icon>login</mat-icon>
+            Login
+        </button>
+    </div>
+</div>

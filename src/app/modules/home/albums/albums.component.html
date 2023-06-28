@@ -1,0 +1,25 @@
+<div id="main-container">
+
+    <div id="top-container">
+        <h1>
+            <mat-icon class="icon-display">folder</mat-icon>
+            Albums
+        </h1>
+        <button mat-button id="new-album"
+        (click)="newAlbum()">
+            <mat-icon>add</mat-icon>
+            New album
+        </button>
+    </div>
+
+    <div id="album-container">
+        <div class="album" *ngFor="let album of albums; let i = index;" (click)="openAlbum(i)">
+            <mat-icon>folder</mat-icon>
+            <h3> {{ album.name }} </h3>
+        </div>
+    </div>
+
+    <h2 id="no-albums-message" *ngIf="albums.length === 0">You currently don't have any albums.</h2>
+
+
+</div>

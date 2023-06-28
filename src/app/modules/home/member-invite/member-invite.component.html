@@ -1,0 +1,52 @@
+<form
+    [formGroup]="inviteMemberForm"
+    class="invite-member-container">
+    <h1 *ngIf="membersList.length != 0">My members</h1>
+    <div class="current-members">
+        <div class="member" *ngFor="let member of membersList; let i = index">
+            <h3>{{member.email}}</h3>
+        </div>
+    </div>
+    <h1>Invite member</h1>
+    <div class="mail-container">
+        <mat-form-field class="field" hideRequiredMarker>
+            <mat-label>Email</mat-label>
+            <input matInput type="text" name="email" formControlName="email">
+            <mat-error *ngIf="inviteMemberForm?.get('email')?.invalid">Email is invalid.</mat-error>
+        </mat-form-field>
+        <button
+            class="add-email-button"
+            mat-button
+            type="submit"
+            [disabled]="inviteMemberForm.get('email')?.invalid"
+            (click)="inviteMemberForm.value.email && invite(inviteMemberForm.value.email)">
+            <mat-icon>call_made</mat-icon>
+            Invite
+        </button>
+    </div>
+    <h1 *ngIf="pendingMembers.length != 0">Pending members</h1>
+    <div class="current-members">
+        <div class="member" *ngFor="let member of pendingMembers; let i = index">
+            <h3>{{member.email}}</h3>
+            <div class="accept-decline-buttons">
+                <button
+                    type="button"
+                    class="blue"
+                    mat-button
+                    (click)="manageRequest(member.id, 'accept')">
+                    <mat-icon>check</mat-icon>
+                    Accept
+                </button>
+                <button
+                    type="button"
+                    class="red"
+                    mat-button
+                    (click)="manageRequest(member.id, 'decline')">
+                    <mat-icon>close</mat-icon>
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+

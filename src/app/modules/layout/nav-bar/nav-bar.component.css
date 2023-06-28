@@ -1,0 +1,37 @@
+#nav-bar {
+    background-color: #0B2433;
+    width: 300px;
+    height: calc(100vh - 40px);
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+h2 {
+    margin: 0 30px 5px 30px;
+    color: #E1F3FA;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+#buttons-container, #login-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: inherit;
+}
+
+.nav-button {
+    margin: 0 30px;
+    font-size: 20px;
+    background-color: #34D8F5;
+    color: #0B2433;
+    border-radius: 20px;
+    height: 36px;
+    padding-left: 0;
+    text-align: left;
+}
+
+#sign-out-button {
+    margin-top: auto;
+}
+
